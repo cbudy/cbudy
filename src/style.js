@@ -75,9 +75,40 @@ const MainStyle = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  input:{
+  input: {
 
-  }
+  },
+  popUpBox: {
+    borderWidth: 1,
+    borderColor: 'white',
+    elevation: 5,
+    backgroundColor: 'white'
+  },
+  popUpText: {
+    color: 'black'
+  },
+  buttonOkay: {
+    alignSelf: 'flex-start',
+    padding: vw / 20,
+    flex: 1,
+    borderRightColor: 'gray',
+    borderRightWidth: 1,
+  },
+  buttonCancel: {
+    alignSelf: 'flex-end',
+    padding: vw / 20,
+    flex: 1
+
+  },
+  buttonInPopup:
+  {
+    flexDirection: 'row',
+    borderTopColor: 'gray',
+    borderTopWidth: 1,
+    marginTop: vw / 20
+  },
+  headerStyle:{ flexDirection: 'row', justifyContent:'space-between', }
+
 });
 
 export default MainStyle

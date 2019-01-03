@@ -2,9 +2,47 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Button, TextInput, InputAccessoryView, ScrollView } from 'react-native';
 import MainStyle from '../../style'
 import { Content, } from 'native-base'
+import { Auth } from 'aws-amplify';
+import {validateEmail , validatePassword} from '../Validate/component'
+
+
 
 export default class Login extends Component {
   state = { username: '', password: '' };
+
+  Login = () => { 
+    Auth.signIn(this.state.username, this.state.password)
+      .then(success => {
+        console.log('successful sign in', success)
+        this.props.navigation.navigate('home')
+      })
+      .catch(err => {
+        console.log("error", err)
+        alert(err.message)
+      });
+  }
+  userGet = (data) => {
+    // console.log(data)
+    this.setState({
+      username: data
+    })
+    validateEmail(data)
+  }
+  passGet = (val) => {
+    this.setState({
+      password: val
+    })
+    validatePassword(val)
+  }
+  emptyEmail=()=>{
+    if(this.state.username=='')
+{
+  alert('empty field')
+  return false;
+} else{
+  return true
+} 
+}
   gLogin = () => {
 
   }
@@ -44,8 +82,9 @@ export default class Login extends Component {
                 placeholder=" Enter UserName"
                 placeholderTextColor="#adadac"
                 inputAccessoryViewID={'password'}
-                onChangeText={username => this.setState({ username })}
+                onChangeText={this.userGet}
                 value={this.state.username}
+              
               />
               <TextInput
                 style={{
@@ -54,26 +93,26 @@ export default class Login extends Component {
                   paddingLeft: 15,
                   borderColor: '#adadac'
                 }}
-                secureTextEntry={true}  
+                secureTextEntry={true}
                 placeholder=" Enter Password"
                 placeholderTextColor="#adadac"
                 inputAccessoryViewID={'password'}
-                onChangeText={password => this.setState({ password })}
+                onChangeText={this.passGet}
                 value={this.state.password}
               />
-              <Text 
-              onPress={() => this.props.navigation.navigate('signUp')}
-              style={{
-                paddingTop:5,
-                padding: 10,
-                paddingLeft: 30,
-                color: '#2ecc71'
-              }}> 
+              <Text
+                onPress={() => this.props.navigation.navigate('signUp')}
+                style={{
+                  paddingTop: 5,
+                  padding: 10,
+                  paddingLeft: 30,
+                  color: '#2ecc71'
+                }}>
                 Forgot Password ?
               </Text>
             </View>
             <View style={MainStyle.button}>
-              <Text style={MainStyle.textFff} onPress={() => this.props.navigation.navigate('login')}>
+              <Text style={MainStyle.textFff} onPress={this.Login}>
                 Login
               </Text>
             </View>
